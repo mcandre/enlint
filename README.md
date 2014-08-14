@@ -38,7 +38,9 @@ examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binar
 
 ## Optional
 
-* [iconv](http://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.13/iconv.1.html) can assist in converting between encodings
+* [iconv](http://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.13/iconv.1.html)
+
+`iconv` can be used manually to help convert files to different encodings.
 
 # INSTALL
 
