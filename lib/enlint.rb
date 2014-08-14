@@ -87,7 +87,7 @@ def self.recursive_list(directory, ignores = DEFAULT_IGNORES)
 end
 
 def self.check(filename, rules = DEFAULT_RULES)
-  line = `file -i #{filename} 2>&1`
+  line = `file -i "#{filename}" 2>&1`
 
   encoding = AnEncoding.parse(filename, line)
 
