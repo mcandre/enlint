@@ -10,7 +10,7 @@ https://rubygems.org/gems/enlint
 
 # ABOUT
 
-enlint scans large projects for strange file encodings, which may cause issues with some software.
+enlint scans large projects for strange text file encodings, which may cause issues with some software.
 
 * The World Wide Web encourages UTF-8 encoding for electronic text content, so that web pages in any foreign languge may be rendered by Web browsers anywhere in the world. `.html` content should be UTF-8.
 * ASCII is considered deprecated, though still acceptable where non-US characters are not used. `.txt` files are often ASCII.
