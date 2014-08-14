@@ -14,6 +14,7 @@ DEFAULT_IGNORES = %w(
   Gemfile.lock
   .exe
   .bin
+  .pdf
   .png
   .jpg
   .jpeg
@@ -28,7 +29,7 @@ DEFAULT_IGNORES = %w(
 #
 DEFAULT_RULES = [
   [/\.reg$/, /utf-16/],
-  [/.*/, /(utf-8|ascii)/]
+  [/.*/, /(utf-8|ascii|binary|unknown)/]
 ]
 
 #
