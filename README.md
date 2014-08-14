@@ -35,7 +35,6 @@ examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binar
 
 * [Ruby](https://www.ruby-lang.org/) 2+
 * [file](http://darwinsys.com/file/)
-* [grep](http://www.gnu.org/software/grep/)
 
 ## Optional
 
