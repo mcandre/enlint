@@ -30,6 +30,10 @@ enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.co
 * [file](http://darwinsys.com/file/)
 * [grep](http://www.gnu.org/software/grep/)
 
+## Optional
+
+* [iconv](http://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.13/iconv.1.html) can assist in converting between encodings
+
 # INSTALL
 
 Install via [RubyGems](http://rubygems.org/):

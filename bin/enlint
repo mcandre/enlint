@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require 'find'
+require 'optparse'
+
+require 'rubygems'
+require 'enlint'
+
+def main
+  ignores = DEFAULT_IGNORES
+
+  filenames = ['.']
+
+  option = OptionParser.new do |option|
+    option.banner = 'Usage: enlint [options] [<files>]'
+
+    option.on('-i', '--ignore pattern', 'Ignore file names matching Ruby regex pattern') do |pattern|
+      ignores << pattern
+    end
+
+    option.on('-h', '--help', 'Print usage info') do
+      puts option
+      exit
+    end
+
+    option.on('-v', '--version', 'Print version info') do
+      puts "enlint #{EnLint::VERSION}"
+      exit
+    end
+  end
+
+  option.parse!
+
+  filenames = ARGV unless ARGV.empty?
+
+  recursive_filenames = []
+
+  filenames.each do |f|
+    if File.directory? f
+      recursive_filenames = recursive_filenames.concat(recursive_list(f, ignores))
+    else
+      recursive_filenames << f
+    end
+  end
+
+  recursive_filenames.each { |f| check f }
+end
+
+begin
+  main
+# User may quit enlint before completion.
+rescue Interrupt
+  nil
+# enlint may be piped to another program (e.g. `less`),
+# which is quit before enlint completes.
+rescue Errno::EPIPE, Errno::EMFILE
+  nil
+end
