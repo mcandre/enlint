@@ -32,6 +32,9 @@ DEFAULT_RULES = [
   [/.*/, /(utf-8|ascii|binary|unknown)/]
 ]
 
+# Warning for files that do not exist
+NO_SUCH_FILE = 'no such file'
+
 #
 # Parse, model, and print an encoding.
 # Distinct from Ruby's built-in Encoding class.
@@ -40,12 +43,16 @@ class AnEncoding
   attr_accessor :filename, :empty, :encoding
 
   def self.parse(filename, file_line)
-    match = file_line.match(/^.+\:\s+(.+);\s+charset=(.+)$/)
+    if file_line =~ /ERROR\:/ then
+      AnEncoding.new(filename, false, NO_SUCH_FILE)
+    else
+      match = file_line.match(/^.+\:\s+(.+);\s+charset=(.+)$/)
 
-    empty = match[1] == 'inode/x-empty'
-    encoding = match[2]
+      empty = match[1] == 'inode/x-empty'
+      encoding = match[2]
 
-    AnEncoding.new(filename, empty, encoding)
+      AnEncoding.new(filename, empty, encoding)
+    end
   end
 
   def initialize(filename, empty, encoding)
@@ -71,7 +78,14 @@ class AnEncoding
 
   def to_s(encoding_difference = false)
     if encoding_difference then
-      "#{@filename}: observed #{encoding_difference[0]} preferred: #{encoding_difference[1].inspect}"
+      observed = encoding_difference[0]
+      preferred = encoding_difference[1].inspect
+
+      if observed == NO_SUCH_FILE then
+        "#{@filename}: #{NO_SUCH_FILE}"
+      else
+        "#{@filename}: observed #{observed} preferred: #{preferred}"
+      end
     else
       "#{@filename}: #{@encoding}"
     end
