@@ -24,6 +24,13 @@ enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.co
 * Optional ignore patterns
 * Install via a standard programming language package manager
 
+# EXAMPLES
+
+```
+$ enlint examples/
+examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binary|unknown)/
+```
+
 # REQUIREMENTS
 
 * [Ruby](https://www.ruby-lang.org/) 2+
