@@ -14,7 +14,7 @@ enlint scans large projects for strange text file encodings, which may cause iss
 
 * The World Wide Web encourages UTF-8 encoding for electronic text content, so that web pages in any foreign languge may be rendered by Web browsers anywhere in the world. `.html` content should be UTF-8.
 * ASCII is considered deprecated, though still acceptable where non-US characters are not used. `.txt` files are often ASCII.
-* Windows is an outlier, deciding prematurely to use UTF-16 instead of the world's de facto format, UTF8. `.reg` files are best left in UTF-16.
+* Windows is an outlier, deciding prematurely to use UTF-16 instead of the world's de facto format, UTF8. `.reg` files are best left in ASCII or UTF-16.
 
 Either way, enlint can help identify which files in your projects may be in the "wrong" format, helping resolve encoding-related errors across different computer systems.
 

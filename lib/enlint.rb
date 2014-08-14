@@ -28,7 +28,7 @@ DEFAULT_IGNORES = %w(
 # Only the earliest file pattern match's rule applies.
 #
 DEFAULT_RULES = [
-  [/\.reg$/, /utf-16/],
+  [/\.reg$/, /(ascii|utf-16)/],
   [/.*/, /(utf-8|ascii|binary|unknown)/]
 ]
 
