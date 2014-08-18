@@ -18,7 +18,6 @@ DEFAULT_IGNORES = %w(
   .png
   .jpg
   .jpeg
-  .svg
   .min.js
   -min.js
 )
