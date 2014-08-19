@@ -8,5 +8,7 @@ Then(/^the output is correct for each test$/) do
 
   expect(lines.length).to eq(1)
 
-  expect(lines[0]).to match(%r(^examples/polite-russian.html\: observed iso-8859-1 preferred: \/\(utf-8|ascii\)/))
+  expect(lines[0]).to match(
+    %r(^examples/polite-russian.html\:.+$)
+  )
 end

@@ -34,6 +34,29 @@ DEFAULT_RULES = [
 # Warning for files that do not exist
 NO_SUCH_FILE = 'no such file'
 
+MAC_OS_X = RUBY_PLATFORM =~ /darwin/
+
+MIME_FLAG =
+  if MAC_OS_X then
+    '--mime-encoding'
+  else
+    '-i'
+  end
+
+PARSER =
+  if MAC_OS_X then
+    /^(.+)\:\s+(.+)$/
+  else
+    /^.+\:\s+(.+);\s+charset=(.+)$/
+  end
+
+DNE =
+  if MAC_OS_X then
+    /^.+: cannot open `.+' (No such file or directory)$/
+  else
+    /ERROR\:/
+  end
+
 #
 # Parse, model, and print an encoding.
 # Distinct from Ruby's built-in Encoding class.
@@ -42,12 +65,12 @@ class AnEncoding
   attr_accessor :filename, :empty, :encoding
 
   def self.parse(filename, file_line)
-    if file_line =~ /ERROR\:/ then
+    if file_line =~ DNE then
       AnEncoding.new(filename, false, NO_SUCH_FILE)
     else
-      match = file_line.match(/^.+\:\s+(.+);\s+charset=(.+)$/)
+      match = file_line.match(PARSER)
 
-      empty = match[1] == 'inode/x-empty'
+      empty = match[1] == 'inode/x-empty' || match[2] == 'binary'
       encoding = match[2]
 
       AnEncoding.new(filename, empty, encoding)
@@ -100,7 +123,7 @@ def self.recursive_list(directory, ignores = DEFAULT_IGNORES)
 end
 
 def self.check(filename, rules = DEFAULT_RULES)
-  line = `file -i "#{filename}" 2>&1`
+  line = `file #{MIME_FLAG} "#{filename}" 2>&1`
 
   encoding = AnEncoding.parse(filename, line)
 
