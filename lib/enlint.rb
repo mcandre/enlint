@@ -37,21 +37,21 @@ NO_SUCH_FILE = 'no such file'
 MAC_OS_X = RUBY_PLATFORM =~ /darwin/
 
 MIME_FLAG =
-  if MAC_OS_X then
+  if MAC_OS_X
     '--mime-encoding'
   else
     '-i'
   end
 
 PARSER =
-  if MAC_OS_X then
+  if MAC_OS_X
     /^(.+)\:\s+(.+)$/
   else
     /^.+\:\s+(.+);\s+charset=(.+)$/
   end
 
 DNE =
-  if MAC_OS_X then
+  if MAC_OS_X
     /^.+: cannot open `.+' (No such file or directory)$/
   else
     /ERROR\:/
@@ -65,7 +65,7 @@ class AnEncoding
   attr_accessor :filename, :empty, :encoding
 
   def self.parse(filename, file_line)
-    if file_line =~ DNE then
+    if file_line =~ DNE
       AnEncoding.new(filename, false, NO_SUCH_FILE)
     else
       match = file_line.match(PARSER)
@@ -85,12 +85,12 @@ class AnEncoding
 
   def violate?(rules)
     # Ignore empty files, which are considered binary.
-    if @empty then
+    if @empty
       false
     else
       preferred = rules.select { |rule| filename =~ rule.first }.first[1]
 
-      if ! (encoding =~ preferred) then
+      if ! (encoding =~ preferred)
         [encoding, preferred]
       else
         false
@@ -99,11 +99,11 @@ class AnEncoding
   end
 
   def to_s(encoding_difference = false)
-    if encoding_difference then
+    if encoding_difference
       observed = encoding_difference[0]
       preferred = encoding_difference[1].inspect
 
-      if observed == NO_SUCH_FILE then
+      if observed == NO_SUCH_FILE
         "#{@filename}: #{NO_SUCH_FILE}"
       else
         "#{@filename}: observed #{observed} preferred: #{preferred}"
@@ -129,7 +129,5 @@ def self.check(filename, rules = DEFAULT_RULES)
 
   encoding_difference = encoding.violate?(rules)
 
-  if encoding_difference then
-    puts encoding.to_s(encoding_difference)
-  end
+  puts encoding.to_s(encoding_difference) if encoding_difference
 end
