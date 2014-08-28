@@ -117,8 +117,7 @@ end
 def self.recursive_list(directory, ignores = DEFAULT_IGNORES)
   Find.find(directory).reject do |f|
     File.directory?(f) ||
-    ignores.any? { |ignore| f =~ /#{ignore}/ } ||
-    File.binary?(f)
+    ignores.any? { |ignore| f =~ /#{ignore}/ }
   end
 end
 
