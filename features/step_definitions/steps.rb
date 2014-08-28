@@ -1,6 +1,8 @@
 Given(/^the program has finished$/) do
   # Test files are generated using iconv.
+
   @cucumber = `enlint examples/`
+  @cucumber_ignore_html = `enlint -i \.html examples/`
 end
 
 Then(/^the output is correct for each test$/) do
@@ -11,4 +13,8 @@ Then(/^the output is correct for each test$/) do
   expect(lines[0]).to match(
     %r(^examples/polite-russian.html\:.+$)
   )
+
+  lines_ignore_html = @cucumber_ignore_html.split("\n")
+
+  expect(lines_ignore_html.length).to eq(0)
 end

@@ -29,6 +29,15 @@ enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.co
 ```
 $ enlint examples/
 examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binary|unknown)/
+
+$ enlint -i \.html examples/
+$
+
+$ enlint -h
+Usage: enlint [options] [<files>]
+    -i, --ignore pattern             Ignore file names matching Ruby regex pattern
+    -h, --help                       Print usage info
+    -v, --version                    Print version info
 ```
 
 # REQUIREMENTS

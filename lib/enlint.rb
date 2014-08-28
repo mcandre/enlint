@@ -4,22 +4,22 @@ require 'ptools'
 require 'version'
 
 DEFAULT_IGNORES = %w(
-  .hg/
-  .svn/
-  .git/
-  .git
-  .gitignore
+  \.hg/
+  \.svn/
+  \.git/
+  \.git
+  \.gitignore
   node_modules/
-  .vagrant/
-  Gemfile.lock
-  .exe
-  .bin
-  .pdf
-  .png
-  .jpg
-  .jpeg
-  .min.js
-  -min.js
+  \.vagrant/
+  Gemfile\.lock
+  \.exe
+  \.bin
+  \.pdf
+  \.png
+  \.jpg
+  \.jpeg
+  \.min.js
+  -min\.js
 )
 
 #
