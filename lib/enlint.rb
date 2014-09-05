@@ -29,6 +29,7 @@ DEFAULT_IGNORES = %w(
 DEFAULT_RULES = [
   [/\.reg$/, /(ascii|utf-16)/],
   [/\.bat$/, /(ascii|utf-16)/],
+  [/\.ps1$/, /(ascii|utf-16)/],
   [/.*/, /(utf-8|ascii|binary|unknown)/]
 ]
 
