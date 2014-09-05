@@ -28,9 +28,13 @@ enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.co
 
 ```
 $ enlint examples/
+examples/hello-wrong.bat: observed utf-8 preferred: /(ascii|utf-16)/
 examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binary|unknown)/
 
 $ enlint -i \.html examples/
+examples/hello-wrong.bat: observed utf-8 preferred: /(ascii|utf-16)/
+
+$ enlint -i \.html -i \.bat examples/
 $
 
 $ enlint -h
