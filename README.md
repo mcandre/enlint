@@ -51,9 +51,9 @@ Usage: enlint [options] [<files>]
 
 ## Optional
 
-* [iconv](http://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.13/iconv.1.html)
+* [moreutils](http://joeyh.name/code/moreutils/) provides `isutf8`, a program for checking whether files are UTF-8 encoded.
 
-`iconv` can be used manually to help convert files to different encodings.
+* [iconv](http://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.13/iconv.1.html) can be used manually to help convert files to different encodings.
 
 # INSTALL
 
