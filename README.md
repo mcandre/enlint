@@ -72,8 +72,8 @@ $ iconv -f koi8-r -t utf-8 examples/polite-russian.html | tail -n 3 | head -n 1
 
 ## Optional
 
+* [enca](https://github.com/nijel/enca) can guess file encodings, provided a few context clues.
 * [moreutils](http://joeyh.name/code/moreutils/) provides `isutf8`, a program for checking whether files are UTF-8 encoded.
-
 * [iconv](http://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.13/iconv.1.html) can be used manually to help convert files to different encodings.
 
 # INSTALL
