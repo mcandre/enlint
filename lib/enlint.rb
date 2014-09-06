@@ -14,6 +14,7 @@ DEFAULT_IGNORES = %w(
   \.exe
   \.bin
   \.dmg
+  \.pkg
   \.app
   \.xcodeproj/
   \.lproj/
