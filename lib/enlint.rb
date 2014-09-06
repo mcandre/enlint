@@ -13,7 +13,11 @@ DEFAULT_IGNORES = %w(
   Gemfile\.lock
   \.exe
   \.bin
+  \.class
+  \.cmo
+  \.cmi
   \.pdf
+  \.dot
   \.png
   \.gif
   \.jpg
