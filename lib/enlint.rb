@@ -17,6 +17,7 @@ DEFAULT_IGNORES = %w(
   \.xcodeproj/
   \.dSYM/
   \.class
+  \.jad
   \.cmo
   \.cmi
   \.pdf
