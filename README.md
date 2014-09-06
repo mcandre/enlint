@@ -46,7 +46,7 @@ Usage: enlint [options] [<files>]
 
 Note: Sometimes enlint correctly identifies a non-UTF-8 encoded file, but misidentifies the actual encoding used, due to limitations in the Unix `file` program.
 
-We suggest using some additional programs, and some context clues to identify the exact encoding used. Only when the original encoding is correctly identified can the file be correctly converted into the preferred encoding.
+We suggest using some additional programs along with context clues to identify the exact encoding used. Only when the original encoding is correctly identified can the file be correctly converted into the preferred encoding.
 
 ```
 $ enlint examples/polite-russian.html 
