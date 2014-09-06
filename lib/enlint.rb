@@ -130,8 +130,6 @@ end
 def self.check(filename, configuration = DEFAULT_CONFIGURATION)
   rules = configuration['rules']
 
-  # puts "Rules: #{rules}"
-
   line = `file #{MIME_FLAG} "#{filename}" 2>&1`
 
   encoding = AnEncoding.parse(filename, line)

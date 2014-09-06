@@ -87,9 +87,6 @@ def main
       # Command line flags override dotfile settings
       configuration = configuration_dotfile.merge(configuration_flags)
 
-      # puts "F: #{f}"
-      # puts "Configuration: #{configuration}"
-
       check(f, configuration)
     end
   end
