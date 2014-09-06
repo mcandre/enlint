@@ -13,6 +13,9 @@ DEFAULT_IGNORES = %w(
   Gemfile\.lock
   \.exe
   \.bin
+  \.app
+  \.xcodeproj/
+  \.dSYM/
   \.class
   \.cmo
   \.cmi
