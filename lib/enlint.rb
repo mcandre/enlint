@@ -15,8 +15,10 @@ DEFAULT_IGNORES = %w(
   \.bin
   \.pdf
   \.png
+  \.gif
   \.jpg
   \.jpeg
+  \.tiff
   \.min.js
   -min\.js
 )
