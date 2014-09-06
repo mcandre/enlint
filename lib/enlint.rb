@@ -7,7 +7,6 @@ DEFAULT_IGNORES = %w(
   \.hg/
   \.svn/
   \.git/
-  \.git
   \.gitignore
   node_modules/
   \.vagrant/
@@ -32,6 +31,10 @@ DEFAULT_RULES = [
   [/\.ps1$/, /(ascii|utf-16)/],
   [/.*/, /(utf-8|ascii|binary|unknown)/]
 ]
+
+DEFAULT_CONFIGURATION = {
+  'rules' => DEFAULT_RULES
+}
 
 # Warning for files that do not exist
 NO_SUCH_FILE = 'no such file'
@@ -124,7 +127,11 @@ def self.recursive_list(directory, ignores = DEFAULT_IGNORES)
   end
 end
 
-def self.check(filename, rules = DEFAULT_RULES)
+def self.check(filename, configuration = DEFAULT_CONFIGURATION)
+  rules = configuration['rules']
+
+  # puts "Rules: #{rules}"
+
   line = `file #{MIME_FLAG} "#{filename}" 2>&1`
 
   encoding = AnEncoding.parse(filename, line)

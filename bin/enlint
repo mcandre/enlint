@@ -1,15 +1,20 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
 require 'find'
 require 'optparse'
-
-require 'rubygems'
+require 'yaml'
 require 'enlint'
+
+IGNORE_FILENAME = '.enlintignore'
+CONFIGURATION_FILENAME = '.enlintrc.yml'
 
 def main
   ignores = DEFAULT_IGNORES
 
   filenames = ['.']
+
+  configuration_flags = {}
 
   option = OptionParser.new do |option|
     option.banner = 'Usage: enlint [options] [<files>]'
@@ -43,7 +48,51 @@ def main
     end
   end
 
-  recursive_filenames.each { |f| check f }
+  configuration_dotfile = DEFAULT_CONFIGURATION
+
+  recursive_filenames.each do |f|
+    dir = File.expand_path("..", f)
+
+    parent_of_home = File.expand_path("..", ENV["HOME"])
+
+    while dir != parent_of_home
+      ignore_file = dir + File::SEPARATOR + IGNORE_FILENAME
+
+      if File.exist?(ignore_file) then
+        ignores.concat(open(ignore_file).read.split("\n"))
+      end
+
+      dir = File.expand_path("..", dir)
+    end
+
+    if ignores.none? { |ignore| f =~ %r(#{ignore}) } then
+      dir = File.expand_path("..", f)
+
+      parent_of_home = File.expand_path("..", ENV["HOME"])
+
+      while dir != parent_of_home
+        config_file = dir + File::SEPARATOR + CONFIGURATION_FILENAME
+
+        if File.exist?(config_file) then
+          configuration_dotfile = DEFAULT_CONFIGURATION.merge(YAML.load_file(config_file))
+          break
+        else
+          dir = File.expand_path("..", dir)
+        end
+      end
+
+      # Hack to Reset configuration when changing directories
+      configuration_dotfile = DEFAULT_CONFIGURATION unless File.exist?(dir + File::SEPARATOR + CONFIGURATION_FILENAME)
+
+      # Command line flags override dotfile settings
+      configuration = configuration_dotfile.merge(configuration_flags)
+
+      # puts "F: #{f}"
+      # puts "Configuration: #{configuration}"
+
+      check(f, configuration)
+    end
+  end
 end
 
 begin

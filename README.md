@@ -22,6 +22,7 @@ enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.co
 
 * Recursive file search by default
 * Optional ignore patterns
+* Configuration via per-project and per-user [dotfiles](https://github.com/mcandre/enlint/blob/master/CONFIGURE.md#dotfiles)
 * Install via a standard programming language package manager
 
 # EXAMPLES
@@ -83,6 +84,10 @@ Install via [RubyGems](http://rubygems.org/):
 ```
 $ gem install enlint
 ```
+
+# CONFIGURE
+
+See [CONFIGURE.md](https://github.com/mcandre/enlint/blob/master/CONFIGURE.md) for details.
 
 # LICENSE
 
