@@ -19,6 +19,7 @@ DEFAULT_IGNORES = %w(
   \.jpg
   \.jpeg
   \.tiff
+  \.wav
   \.min.js
   -min\.js
 )
