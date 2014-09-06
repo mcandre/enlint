@@ -44,6 +44,27 @@ Usage: enlint [options] [<files>]
     -v, --version                    Print version info
 ```
 
+Note: Sometimes enlint correctly identifies a non-UTF-8 encoded file, but misidentifies the actual encoding used, due to limitations in the Unix `file` program.
+
+We suggest using some additional programs, and some context clues to identify the exact encoding used. Only when the original encoding is correctly identified can the file be correctly converted into the preferred encoding.
+
+```
+$ enlint examples/polite-russian.html 
+examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binary|unknown)/
+
+$ file -I examples/polite-russian.html 
+examples/polite-russian.html: text/html; charset=iso-8859-1
+
+$ iconv -f iso-8859-1 -t utf-8 examples/polite-russian.html | tail -n 3 | head -n 1
+<p>äÏ Ó×ÉÄÁÎÉÑ! [Do svidanija!] (Goodbye!)</p>
+
+$ enca -i -L russian examples/polite-russian.html 
+KOI8-R
+
+$ iconv -f koi8-r -t utf-8 examples/polite-russian.html | tail -n 3 | head -n 1
+<p>До свидания! [Do svidanija!] (Goodbye!)</p>
+```
+
 # REQUIREMENTS
 
 * [Ruby](https://www.ruby-lang.org/) 2+
