@@ -15,6 +15,8 @@ DEFAULT_IGNORES = %w(
   \.bin
   \.app
   \.xcodeproj/
+  \.lproj/
+  \.xcassets/
   \.dSYM/
   \.class
   \.jad
