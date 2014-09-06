@@ -9,6 +9,9 @@ DEFAULT_IGNORES = %w(
   \.git/
   \.gitignore
   node_modules/
+  bower_components/
+  target/
+  dist/
   \.vagrant/
   Gemfile\.lock
   \.exe
