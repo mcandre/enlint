@@ -44,6 +44,7 @@ DEFAULT_IGNORES = %w(
   \.tiff
   \.ico
   \.wav
+  \.mp3
 )
 
 #
