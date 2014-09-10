@@ -15,7 +15,7 @@ Run `enlint -h` or `enlint --help` for a full list, or refer to the source code 
 ```
 $ enlint -h
 Usage: enlint [options] [<files>]
-    -i, --ignore pattern             Ignore file names matching Ruby regex pattern
+    -i, --ignore pattern             Ignore file patterns (fnmatch)
     -h, --help                       Print usage info
     -v, --version                    Print version info
 ```
@@ -30,7 +30,7 @@ Samples:
 
 * [examples/.enlintignore](https://github.com/mcandre/enlint/blob/master/examples/www-arabic/.enlintignore)
 
-A `.enlintignore` may contain Ruby regex patterns of files and/or folders to exclude from scanning, one pattern per line.
+A `.enlintignore` may contain fnmatch patterns of files and/or folders to exclude from scanning, one pattern per line.
 
 ## `.enlintrc.yml`
 
@@ -44,7 +44,9 @@ Samples:
 
 A rule is a two element list, of a filename pattern and an encoding preference.
 
-Filename patterns and encoding preferences are each Ruby regexps.
+Filename patterns are fnmatch regexes.
+
+Encoding preferences are Ruby regexes.
 
 # Built-in defaults
 
@@ -52,9 +54,7 @@ Filename patterns and encoding preferences are each Ruby regexps.
 
 ```
 [
-  [/\.reg$/, /(ascii|utf-16)/],
-  [/\.bat$/, /(ascii|utf-16)/],
-  [/\.ps1$/, /(ascii|utf-16)/],
-  [/.*/, /(utf-8|ascii|binary|unknown)/]
+  ['*.{reg,bat,ps1}', /(ascii|utf-16)/],
+  ['*', /(utf-8|ascii|binary|unknown)/]
 ]
 ```

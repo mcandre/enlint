@@ -2,7 +2,7 @@ Given(/^the program has finished$/) do
   # Test files are generated using iconv.
 
   @cucumber = `enlint examples/`
-  @cucumber_ignore_html = `enlint -i \.html examples/`
+  @cucumber_ignore_html = `enlint -i '*.html' examples/`
 end
 
 Then(/^the output is correct for each test$/) do

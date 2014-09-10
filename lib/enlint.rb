@@ -1,50 +1,51 @@
 require 'rubygems'
 require 'ptools'
+require 'yaml'
 
 require 'version'
 
 DEFAULT_IGNORES = %w(
-  \.hg/
-  \.svn/
-  \.git/
-  \.gitignore
+  .hg/
+  .svn/
+  .git/
+  .gitignore
   node_modules/
   bower_components/
   target/
   dist/
-  \.vagrant/
-  Gemfile\.lock
-  \.exe
-  \.bin
-  \.apk
-  \.ap_
+  .vagrant/
+  Gemfile.lock
+  *.exe
+  *.bin
+  *.apk
+  *.ap_
   res/
-  \.dmg
-  \.pkg
-  \.app
-  \.xcodeproj/
-  \.lproj/
-  \.xcassets/
-  \.pmdoc/
-  \.dSYM/
-  \.class
-  \.zip
-  \.jar
-  \.war
-  \.xpi
-  \.jad
-  \.cmo
-  \.cmi
-  \.pdf
-  \.dot
-  \.png
-  \.gif
-  \.jpg
-  \.jpeg
-  \.tiff
-  \.ico
-  \.wav
-  \.mp3
+  *.dmg
+  *.pkg
+  *.app
+  *.xcodeproj/
+  *.lproj/
+  *.xcassets/
+  *.pmdoc/
+  *.dSYM/
+  *.class
+  *.zip
+  *.jar
+  *.war
+  *.xpi
+  *.jad
+  *.cmo
+  *.cmi
+  *.pdf
+  *.dot
+  *.png
+  *.gif
+  *.jpg
+  *.jpeg
+  *.tiff
+  *.ico
+  *.wav
+  *.mp3
 )
 
 #
@@ -52,10 +53,8 @@ DEFAULT_IGNORES = %w(
 # Only the earliest file pattern match's rule applies.
 #
 DEFAULT_RULES = [
-  [/\.reg$/, /(ascii|utf-16)/],
-  [/\.bat$/, /(ascii|utf-16)/],
-  [/\.ps1$/, /(ascii|utf-16)/],
-  [/.*/, /(utf-8|ascii|binary|unknown)/]
+  ['*.{reg,bat,ps1}', /(ascii|utf-16)/],
+  ['*', /(utf-8|ascii|binary|unknown)/]
 ]
 
 DEFAULT_CONFIGURATION = {
@@ -119,7 +118,9 @@ class AnEncoding
     if @empty
       false
     else
-      preferred = rules.select { |rule| filename =~ rule.first }.first[1]
+      preferred = rules.select do |rule|
+        Dotsmack::fnmatch?(rule.first, filename)
+      end.first[1]
 
       if ! (encoding =~ preferred)
         [encoding, preferred]
@@ -145,15 +146,14 @@ class AnEncoding
   end
 end
 
-def self.recursive_list(directory, ignores = DEFAULT_IGNORES)
-  Find.find(directory).reject do |f|
-    File.directory?(f) ||
-    ignores.any? { |ignore| f =~ /#{ignore}/ } ||
-    File.binary?(f)
-  end
-end
+def self.check(filename, configuration = nil)
+  configuration =
+    if configuration.nil?
+      DEFAULT_CONFIGURATION
+    else
+      DEFAULT_CONFIGURATION.merge(YAML.load(configuration))
+    end
 
-def self.check(filename, configuration = DEFAULT_CONFIGURATION)
   rules = configuration['rules']
 
   line = `file #{MIME_FLAG} "#{filename}" 2>&1`

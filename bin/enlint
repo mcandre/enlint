@@ -3,23 +3,18 @@
 require 'rubygems'
 require 'find'
 require 'optparse'
-require 'yaml'
+require 'dotsmack'
 require 'enlint'
-
-IGNORE_FILENAME = '.enlintignore'
-CONFIGURATION_FILENAME = '.enlintrc.yml'
 
 def main
   ignores = DEFAULT_IGNORES
-
-  filenames = ['.']
 
   configuration_flags = {}
 
   option = OptionParser.new do |option|
     option.banner = 'Usage: enlint [options] [<files>]'
 
-    option.on('-i', '--ignore pattern', 'Ignore file names matching Ruby regex pattern') do |pattern|
+    option.on('-i', '--ignore pattern', 'Ignore file patterns (fnmatch)') do |pattern|
       ignores << pattern
     end
 
@@ -36,59 +31,21 @@ def main
 
   option.parse!
 
-  filenames = ARGV unless ARGV.empty?
-
-  recursive_filenames = []
-
-  filenames.each do |f|
-    if File.directory? f
-      recursive_filenames = recursive_filenames.concat(recursive_list(f, ignores))
+  filenames =
+    if ARGV == []
+      ['.']
     else
-      recursive_filenames << f
-    end
-  end
-
-  configuration_dotfile = DEFAULT_CONFIGURATION
-
-  recursive_filenames.each do |f|
-    dir = File.expand_path("..", f)
-
-    parent_of_home = File.expand_path("..", ENV["HOME"])
-
-    while dir != parent_of_home
-      ignore_file = dir + File::SEPARATOR + IGNORE_FILENAME
-
-      if File.exist?(ignore_file) then
-        ignores.concat(open(ignore_file).read.split("\n"))
-      end
-
-      dir = File.expand_path("..", dir)
+      ARGV
     end
 
-    if ignores.none? { |ignore| f =~ %r(#{ignore}) } then
-      dir = File.expand_path("..", f)
+  dotsmack = Dotsmack::Smacker.new(
+    dotignore = '.enlintignore',
+    additional_ignores = ignores,
+    dotconfig = '.enlintrc.yml',
+  )
 
-      parent_of_home = File.expand_path("..", ENV["HOME"])
-
-      while dir != parent_of_home
-        config_file = dir + File::SEPARATOR + CONFIGURATION_FILENAME
-
-        if File.exist?(config_file) then
-          configuration_dotfile = DEFAULT_CONFIGURATION.merge(YAML.load_file(config_file))
-          break
-        else
-          dir = File.expand_path("..", dir)
-        end
-      end
-
-      # Hack to Reset configuration when changing directories
-      configuration_dotfile = DEFAULT_CONFIGURATION unless File.exist?(dir + File::SEPARATOR + CONFIGURATION_FILENAME)
-
-      # Command line flags override dotfile settings
-      configuration = configuration_dotfile.merge(configuration_flags)
-
-      check(f, configuration)
-    end
+  dotsmack.enumerate(filenames).each do |filename, config|
+    check(filename, config)
   end
 end
 

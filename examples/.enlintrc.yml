@@ -1,16 +1,4 @@
 rules:
-  -
-    - !ruby/regexp '/\.xml$/'
-    - !ruby/regexp '/(hebrew|iso-8859-1)/'
-  -
-    - !ruby/regexp '/\.reg$/'
-    - !ruby/regexp '/(ascii|utf-16)/'
-  -
-    - !ruby/regexp '/\.bat$/'
-    - !ruby/regexp '/(ascii|utf-16)/'
-  -
-    - !ruby/regexp '/\.ps1$/'
-    - !ruby/regexp '/(ascii|utf-16)/'
-  -
-    - !ruby/regexp '/.*/'
-    - !ruby/regexp '/(utf-8|ascii|binary|unknown)/'
+  - ['*.xml', !ruby/regexp '/(hebrew|iso-8859-1)/']
+  - ['*.{reg,bat,ps1}', !ruby/regexp '/(ascii|utf-16)/']
+  - ['*', !ruby/regexp '/(utf-8|ascii|binary|unknown)/']

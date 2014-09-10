@@ -20,8 +20,8 @@ Either way, enlint can help identify which files in your projects may be in the 
 
 enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.com/file/) program, presenting a frontend similar to modern linters like [Reek](https://github.com/troessner/reek/wiki) and [JSHint](http://jshint.com/).
 
-* Recursive file search by default
-* Optional ignore patterns
+* Recursive file scanning, like `jshint .`
+* Optional ignore patterns, like `.gitignore`
 * Configuration via per-project and per-user [dotfiles](https://github.com/mcandre/enlint/blob/master/CONFIGURE.md#dotfiles)
 * Install via a standard programming language package manager
 
@@ -32,15 +32,15 @@ $ enlint examples/
 examples/hello-wrong.bat: observed utf-8 preferred: /(ascii|utf-16)/
 examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binary|unknown)/
 
-$ enlint -i \.html examples/
+$ enlint -i '*.html' examples/
 examples/hello-wrong.bat: observed utf-8 preferred: /(ascii|utf-16)/
 
-$ enlint -i \.html -i \.bat examples/
+$ enlint -i '*.html' -i '*.bat' examples/
 $
 
 $ enlint -h
 Usage: enlint [options] [<files>]
-    -i, --ignore pattern             Ignore file names matching Ruby regex pattern
+    -i, --ignore pattern             Ignore file patterns (fnmatch)
     -h, --help                       Print usage info
     -v, --version                    Print version info
 ```
