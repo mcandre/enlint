@@ -4,29 +4,29 @@ require 'yaml'
 require 'version'
 
 DEFAULT_IGNORES = %w(
-  .hg/
-  .svn/
-  .git/
+  .hg
+  .svn
+  .git
   .gitignore
-  node_modules/
-  bower_components/
-  target/
-  dist/
-  .vagrant/
+  node_modules
+  bower_components
+  target
+  dist
+  .vagrant
   Gemfile.lock
   *.exe
   *.bin
   *.apk
   *.ap_
-  res/
+  res
   *.dmg
   *.pkg
   *.app
-  *.xcodeproj/
-  *.lproj/
-  *.xcassets/
-  *.pmdoc/
-  *.dSYM/
+  *.xcodeproj
+  *.lproj
+  *.xcassets
+  *.pmdoc
+  *.dSYM
   *.class
   *.zip
   *.jar
