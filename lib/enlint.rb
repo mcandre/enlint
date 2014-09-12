@@ -4,6 +4,7 @@ require 'yaml'
 require 'version'
 
 DEFAULT_IGNORES = %w(
+  tmp
   .hg
   .svn
   .git
