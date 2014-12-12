@@ -68,7 +68,7 @@ $ iconv -f koi8-r -t utf-8 examples/polite-russian.html | tail -n 3 | head -n 1
 
 # REQUIREMENTS
 
-* [Ruby](https://www.ruby-lang.org/) 2+
+* [Ruby](https://www.ruby-lang.org/) 2.0+
 * [file](http://darwinsys.com/file/)
 
 ## Optional
