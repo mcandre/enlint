@@ -1,29 +1,6 @@
 # enlint - encoding linter
 
-# HOMEPAGE
-
-https://github.com/mcandre/enlint
-
-# RUBYGEMS
-
-https://rubygems.org/gems/enlint
-
-# ABOUT
-
-enlint scans large projects for strange text file encodings, which may cause issues with some software.
-
-* The World Wide Web encourages UTF-8 encoding for electronic text content, so that web pages in any foreign languge may be rendered by Web browsers anywhere in the world. `.html` content should be UTF-8.
-* ASCII is considered deprecated, though still acceptable where non-US characters are not used. `.txt` files are often ASCII.
-* Windows is an outlier, deciding prematurely to use UTF-16 instead of the world's de facto format, UTF8. `.reg` files are best left in ASCII or UTF-16.
-
-Either way, enlint can help identify which files in your projects may be in the "wrong" format, helping resolve encoding-related errors across different computer systems.
-
-enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.com/file/) program, presenting a frontend similar to modern linters like [Reek](https://github.com/troessner/reek/wiki) and [JSHint](http://jshint.com/).
-
-* Recursive file scanning, like `jshint .`
-* Optional ignore patterns, like `.gitignore`
-* Configuration via per-project and per-user [dotfiles](https://github.com/mcandre/enlint/blob/master/CONFIGURE.md#dotfiles)
-* Install via a standard programming language package manager
+`enlint` helps identify strange file encodings, that may cause problems with software interoperability.
 
 # EXAMPLES
 
@@ -65,6 +42,31 @@ KOI8-R
 $ iconv -f koi8-r -t utf-8 examples/polite-russian.html | tail -n 3 | head -n 1
 <p>До свидания! [Do svidanija!] (Goodbye!)</p>
 ```
+
+# HOMEPAGE
+
+https://github.com/mcandre/enlint
+
+# RUBYGEMS
+
+https://rubygems.org/gems/enlint
+
+# ABOUT
+
+enlint scans large projects for strange text file encodings, which may cause issues with some software.
+
+* The World Wide Web encourages UTF-8 encoding for electronic text content, so that web pages in any foreign languge may be rendered by Web browsers anywhere in the world. `.html` content should be UTF-8.
+* ASCII is considered deprecated, though still acceptable where non-US characters are not used. `.txt` files are often ASCII.
+* Windows is an outlier, deciding prematurely to use UTF-16 instead of the world's de facto format, UTF8. `.reg` files are best left in ASCII or UTF-16.
+
+Either way, enlint can help identify which files in your projects may be in the "wrong" format, helping resolve encoding-related errors across different computer systems.
+
+enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.com/file/) program, presenting a frontend similar to modern linters like [Reek](https://github.com/troessner/reek/wiki) and [JSHint](http://jshint.com/).
+
+* Recursive file scanning, like `jshint .`
+* Optional ignore patterns, like `.gitignore`
+* Configuration via per-project and per-user [dotfiles](https://github.com/mcandre/enlint/blob/master/CONFIGURE.md#dotfiles)
+* Install via a standard programming language package manager
 
 # REQUIREMENTS
 
