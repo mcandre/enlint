@@ -1,7 +1,7 @@
 require 'ptools'
 require 'yaml'
 
-require 'version'
+require_relative 'version'
 
 DEFAULT_IGNORES = %w(
   tmp
