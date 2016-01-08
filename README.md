@@ -70,7 +70,7 @@ enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.co
 
 # REQUIREMENTS
 
-* [Ruby](https://www.ruby-lang.org/) 2.0+
+* [Ruby](https://www.ruby-lang.org/) 2.3+
 * [file](http://darwinsys.com/file/)
 
 ## Optional
