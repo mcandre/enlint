@@ -144,9 +144,35 @@ class AnEncoding
       "#{@filename}: #{@encoding}"
     end
   end
+
+  def to_finding(encoding_difference = false)
+    if encoding_difference
+      observed = encoding_difference[0]
+      preferred = encoding_difference[1].inspect
+
+      if observed == NO_SUCH_FILE
+        "#{@filename}: #{NO_SUCH_FILE}"
+      else
+        {
+            :failure => true,
+            :rule => "File encoding",
+            :description => "Observed #{observed}",
+            :categories => [
+                "Compatibility"
+            ],
+            :location => {
+                :path => "#{@filename}",
+            },
+            :recommendation => "Prefered #{preferred}"
+        }
+      end
+    else
+      "#{@filename}: #{@encoding}"
+    end
+  end
 end
 
-def self.check(filename, configuration = nil)
+def self.check(filename, configuration = nil, is_stat = false)
   configuration =
     if configuration.nil?
       DEFAULT_CONFIGURATION
@@ -162,5 +188,9 @@ def self.check(filename, configuration = nil)
 
   encoding_difference = encoding.violate?(rules)
 
-  puts encoding.to_s(encoding_difference) if encoding_difference
+  if is_stat
+    yield encoding.to_finding(encoding_difference) if encoding_difference
+  else
+    puts encoding.to_s(encoding_difference) if encoding_difference
+  end
 end
