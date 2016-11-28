@@ -68,6 +68,8 @@ enlint is a shell wrapper around the traditional Unix [file](http://darwinsys.co
 * Configuration via per-project and per-user [dotfiles](https://github.com/mcandre/enlint/blob/master/CONFIGURE.md#dotfiles)
 * Install via a standard programming language package manager
 
+Note that when UTF-8 text contains purely ASCII characters, software will typically identify the encoding as ASCII rather than UTF-8.
+
 # REQUIREMENTS
 
 * [Ruby](https://www.ruby-lang.org/) 2.3+
