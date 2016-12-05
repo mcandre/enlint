@@ -72,7 +72,7 @@ Note that when UTF-8 text contains purely ASCII characters, software will typica
 
 # REQUIREMENTS
 
-* [Ruby](https://www.ruby-lang.org/) 2.3+
+* [ruby](https://www.ruby-lang.org/) 2.3+
 * [file](http://darwinsys.com/file/)
 
 ## Optional
@@ -80,6 +80,8 @@ Note that when UTF-8 text contains purely ASCII characters, software will typica
 * [enca](https://github.com/nijel/enca) can guess file encodings, provided a few context clues.
 * [moreutils](http://joeyh.name/code/moreutils/) provides `isutf8`, a program for checking whether files are UTF-8 encoded.
 * [iconv](http://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.13/iconv.1.html) can be used manually to help convert files to different encodings.
+* [pargs](https://github.com/mcandre/pargs)
+* [editorconfig-tools](https://www.npmjs.com/package/editorconfig-tools)
 
 # INSTALL
 
