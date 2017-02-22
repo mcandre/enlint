@@ -151,23 +151,14 @@ class AnEncoding
       preferred = encoding_difference[1].inspect
 
       if observed == NO_SUCH_FILE
-        "#{@filename}: #{NO_SUCH_FILE}"
+        finding = StatModule::Finding.new(false, 'File doesn\'t exist', "#{@filename}: #{NO_SUCH_FILE}")
       else
-        {
-            :failure => true,
-            :rule => "File encoding",
-            :description => "Observed #{observed}",
-            :categories => [
-                "Compatibility"
-            ],
-            :location => {
-                :path => "#{@filename}",
-            },
-            :recommendation => "Prefered #{preferred}"
-        }
+        finding = StatModule::Finding.new(true, 'File encoding', "Observed #{observed}")
+        finding.categories = ['Compatibility']
+        finding.location = StatModule::Location.new("#{@filename}")
+        finding.recommendation = "Prefered #{preferred}"
       end
-    else
-      "#{@filename}: #{@encoding}"
+      finding
     end
   end
 end

@@ -6,32 +6,10 @@ require 'optparse'
 require 'dotsmack'
 require 'enlint'
 require 'json'
-
-STAT_HEADER = <<-eos
-{
-  "statVersion": "0.4.0",
-  "process": {
-    "name": "Encoding Linter",
-    "version": "#{EnLint::VERSION}",
-    "description": "Enlint helps identify strange file encodings, that may cause problems with software interoperability",
-    "maintainer": "Andrew Pennebaker",
-    "email": "andrew.pennebaker@gmail.com",
-    "website": "https://github.com/mcandre/enlint",
-    "repeatability": "Associative"
-  },
-  "findings": [
-eos
-
-STAT_FOOTER = <<-eos
-
-  ]
-}
-eos
+require 'stat'
 
 def main
   ignores = DEFAULT_IGNORES
-
-  configuration_flags = {}
 
   is_stat = false
 
@@ -72,23 +50,28 @@ def main
     dotconfig = '.enlintrc.yml',
   )
 
-  finding_count = 0
-
+  findings = []
   dotsmack.enumerate(filenames).each do |filename, config|
     if !is_stat
-      check(filename, config, is_stat)
+      check(filename, config)
     else
       check(filename, config, is_stat) { |finding|
-        puts STAT_HEADER if finding_count == 0
-        puts ',' if finding_count > 0
-        print JSON.pretty_generate(finding).lines.map { |line| '    ' + line }.join
-        finding_count += 1
+        findings.push(finding)
       }
     end
   end
 
-  if is_stat && finding_count > 0
-    puts STAT_FOOTER
+  if is_stat && findings.length > 0
+      process = StatModule::Process.new('EnLint')
+      process.version = "#{EnLint::VERSION}"
+      process.description = 'Enlint helps identify strange file encodings, that may cause problems with software interoperability.'
+      process.maintainer = 'Andrew Pennebaker'
+      process.email = 'andrew.pennebaker@gmail.com'
+      process.website = 'https://github.com/mcandre/enlint'
+      process.repeatability = 'Associative'
+      stat = StatModule::Stat.new(process)
+      stat.findings = findings
+      puts stat.to_json
   end
 end
 
