@@ -155,7 +155,7 @@ class AnEncoding
       else
         finding = StatModule::Finding.new(true, 'File encoding', "Observed #{observed}")
         finding.categories = ['Compatibility']
-        finding.location = StatModule::Location.new("#{@filename}")
+        finding.location = StatModule::Location.new(@filename.to_s)
         finding.recommendation = "Prefered #{preferred}"
       end
       finding
