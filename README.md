@@ -18,6 +18,7 @@ $
 $ enlint -h
 Usage: enlint [options] [<files>]
     -i, --ignore pattern             Ignore file patterns (fnmatch)
+    -s, --stat                       Output in STAT
     -h, --help                       Print usage info
     -v, --version                    Print version info
 ```
