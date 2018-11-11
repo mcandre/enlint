@@ -1,4 +1,5 @@
+---
 rules:
-  - ['*.xml', !ruby/regexp '/(hebrew|iso-8859-1)/']
-  - ['*.{reg,bat,ps1}', !ruby/regexp '/(ascii|utf-16)/']
-  - ['*', !ruby/regexp '/(utf-8|ascii|binary|unknown)/']
+    - ['*.xml', !ruby/regexp '/(hebrew|iso-8859-1)/']
+    - ['*.{reg,bat,ps1}', !ruby/regexp '/(ascii|utf-16)/']
+    - ['*', !ruby/regexp '/(utf-8|ascii|binary|unknown)/']

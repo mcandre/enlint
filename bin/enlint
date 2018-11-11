@@ -9,79 +9,79 @@ require 'json'
 require 'stat'
 
 def main
-  ignores = DEFAULT_IGNORES
+    ignores = DEFAULT_IGNORES
 
-  is_stat = false
+    is_stat = false
 
-  option = OptionParser.new do |option|
-    option.banner = 'Usage: enlint [options] [<files>]'
+    option = OptionParser.new do |option|
+        option.banner = 'Usage: enlint [options] [<files>]'
 
-    option.on('-i', '--ignore pattern', 'Ignore file patterns (fnmatch)') do |pattern|
-      ignores << pattern
+        option.on('-i', '--ignore pattern', 'Ignore file patterns (fnmatch)') do |pattern|
+            ignores << pattern
+        end
+
+        option.on('-s', '--stat', 'Output in STAT') do
+            is_stat = true
+        end
+
+        option.on('-h', '--help', 'Print usage info') do
+            puts option
+            exit
+        end
+
+        option.on('-v', '--version', 'Print version info') do
+            puts "enlint #{EnLint::VERSION}"
+            exit
+        end
     end
 
-    option.on('-s', '--stat', 'Output in STAT') do
-      is_stat = true
-    end
+    option.parse!
 
-    option.on('-h', '--help', 'Print usage info') do
-      puts option
-      exit
-    end
-
-    option.on('-v', '--version', 'Print version info') do
-      puts "enlint #{EnLint::VERSION}"
-      exit
-    end
-  end
-
-  option.parse!
-
-  filenames =
+    filenames =
     if ARGV == []
-      ['.']
+        ['.']
     else
-      ARGV
+        ARGV
     end
 
-  dotsmack = Dotsmack::Smacker.new(
-    dotignore = '.enlintignore',
-    additional_ignores = ignores,
-    dotconfig = '.enlintrc.yml',
-  )
+    dotsmack = Dotsmack::Smacker.new(
+        dotignore = '.enlintignore',
+        additional_ignores = ignores,
+        dotconfig = '.enlintrc.yml',
+    )
 
-  findings = []
-  dotsmack.enumerate(filenames).each do |filename, config|
-    if !is_stat
-      check(filename, config)
-    else
-      check(filename, config, is_stat) { |finding|
-        findings.push(finding)
-      }
+    findings = []
+    dotsmack.enumerate(filenames).each do |filename, config|
+        if !is_stat
+            check(filename, config)
+        else
+            check(filename, config, is_stat) { |finding|
+                findings.push(finding)
+            }
+        end
     end
-  end
 
-  if is_stat && findings.length > 0
-      process = StatModule::Process.new('EnLint')
-      process.version = "#{EnLint::VERSION}"
-      process.description = 'Enlint helps identify strange file encodings, that may cause problems with software interoperability.'
-      process.maintainer = 'Andrew Pennebaker'
-      process.email = 'andrew.pennebaker@gmail.com'
-      process.website = 'https://github.com/mcandre/enlint'
-      process.repeatability = 'Associative'
-      stat = StatModule::Stat.new(process)
-      stat.findings = findings
-      puts stat.to_json
-  end
+    if is_stat && findings.length > 0
+        process = StatModule::Process.new('EnLint')
+        process.version = "#{EnLint::VERSION}"
+        process.description = 'Enlint helps identify strange file encodings, that may cause problems with software interoperability.'
+        process.maintainer = 'Andrew Pennebaker'
+        process.email = 'andrew.pennebaker@gmail.com'
+        process.website = 'https://github.com/mcandre/enlint'
+        process.repeatability = 'Associative'
+        stat = StatModule::Stat.new(process)
+        stat.findings = findings
+        puts stat.to_json
+    end
 end
 
 begin
-  main
-# User may quit enlint before completion.
+    main
+    # User may quit enlint before completion.
 rescue Interrupt
-  nil
-# enlint may be piped to another program (e.g. `less`),
-# which is quit before enlint completes.
+    nil
+    # enlint may be piped to another program (e.g. `less`),
+    # which is quit before enlint completes.
 rescue Errno::EPIPE, Errno::EMFILE
-  nil
+    nil
 end

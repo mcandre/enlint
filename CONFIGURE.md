@@ -12,7 +12,7 @@ Any command-line flags that are present override the same settings in dotfiles a
 
 Run `enlint -h` or `enlint --help` for a full list, or refer to the source code for `bin/enlint`.
 
-```
+```console
 $ enlint -h
 Usage: enlint [options] [<files>]
     -i, --ignore pattern             Ignore file patterns (fnmatch)

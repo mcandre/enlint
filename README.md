@@ -4,7 +4,7 @@
 
 # EXAMPLES
 
-```
+```console
 $ enlint examples/
 examples/hello-wrong.bat: observed utf-8 preferred: /(ascii|utf-16)/
 examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binary|unknown)/
@@ -27,7 +27,7 @@ Note: Sometimes enlint correctly identifies a non-UTF-8 encoded file, but miside
 
 We suggest using some additional programs along with context clues to identify the exact encoding used. Only when the original encoding is correctly identified can the file be correctly converted into the preferred encoding.
 
-```
+```console
 $ enlint examples/polite-russian.html
 examples/polite-russian.html: observed iso-8859-1 preferred: /(utf-8|ascii|binary|unknown)/
 
@@ -81,14 +81,16 @@ Note that when UTF-8 text contains purely ASCII characters, software will typica
 * [enca](https://github.com/nijel/enca) can guess file encodings, provided a few context clues.
 * [moreutils](http://joeyh.name/code/moreutils/) provides `isutf8`, a program for checking whether files are UTF-8 encoded.
 * [iconv](http://www.gnu.org/savannah-checkouts/gnu/libiconv/documentation/libiconv-1.13/iconv.1.html) can be used manually to help convert files to different encodings.
-* [pargs](https://github.com/mcandre/pargs)
-* [editorconfig-tools](https://www.npmjs.com/package/editorconfig-tools)
+* [GNU findutils](https://www.gnu.org/software/findutils/)
+* [stank](https://github.com/mcandre/stank) (e.g. `go get github.com/mcandre/stank/...`)
+* [Python](https://www.python.org) 3+ (for yamllint)
+* [Node.js](https://nodejs.org/en/) (for eclint)
 
 # INSTALL
 
 Install via [RubyGems](http://rubygems.org/):
 
-```
+```console
 $ gem install enlint
 ```
 
@@ -106,7 +108,7 @@ FreeBSD
 
 Keep the interface working:
 
-```
+```console
 $ cucumber
 ```
 
@@ -114,7 +116,7 @@ $ cucumber
 
 Keep the code tidy:
 
-```
+```console
 $ rake lint
 ```
 
