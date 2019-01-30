@@ -99,11 +99,10 @@ class AnEncoding
             AnEncoding.new(filename, false, NO_SUCH_FILE)
         else
             match = file_line.match(PARSER)
-
-            empty = match[1] == 'inode/x-empty' || match[2] == 'binary'
+            mimetype = match[1]
             encoding = match[2]
 
-            AnEncoding.new(filename, empty, encoding)
+            AnEncoding.new(filename, mimetype == 'inode/x-empty' || encoding == 'binary', encoding)
         end
     end
 
@@ -130,58 +129,19 @@ class AnEncoding
         end
     end
 
-    def to_s(encoding_difference = false)
-        if encoding_difference
-            observed = encoding_difference[0]
-            preferred = encoding_difference[1].inspect
-
-            if observed == NO_SUCH_FILE
-                "#{@filename}: #{NO_SUCH_FILE}"
-            else
-                "#{@filename}: observed #{observed} preferred: #{preferred}"
-            end
-        else
-            "#{@filename}: #{@encoding}"
-        end
-    end
-
-    def to_finding(encoding_difference = false)
-        if encoding_difference
-            observed = encoding_difference[0]
-            preferred = encoding_difference[1].inspect
-
-            if observed == NO_SUCH_FILE
-                finding = StatModule::Finding.new(false, 'File does not exist', "#{@filename}: #{NO_SUCH_FILE}")
-            else
-                finding = StatModule::Finding.new(true, 'File encoding', "Observed #{observed}")
-                finding.categories = ['Compatibility']
-                finding.location = StatModule::Location.new(@filename.to_s)
-                finding.recommendation = "Prefered #{preferred}"
-            end
-            finding
-        end
+    def to_s
+        "#{@filename}: #{@encoding}"
     end
 end
 
-def self.check(filename, configuration = nil, is_stat = false)
-    configuration =
-    if configuration.nil?
-        DEFAULT_CONFIGURATION
-    else
-        DEFAULT_CONFIGURATION.merge(YAML.load(configuration))
-    end
+def self.check(filename, configuration = nil)
+    configuration = if configuration.nil?
+            DEFAULT_CONFIGURATION
+        else
+            DEFAULT_CONFIGURATION.merge(YAML.load(configuration))
+        end
 
-    rules = configuration['rules']
+    encoding = AnEncoding.parse(filename, `file #{MIME_FLAG} "#{filename}" 2>&1`)
 
-    line = `file #{MIME_FLAG} "#{filename}" 2>&1`
-
-    encoding = AnEncoding.parse(filename, line)
-
-    encoding_difference = encoding.violate?(rules)
-
-    if is_stat
-        yield encoding.to_finding(encoding_difference) if encoding_difference
-    else
-        puts encoding.to_s(encoding_difference) if encoding_difference
-    end
+    puts encoding.to_s if encoding.violate?(configuration['rules'])
 end
