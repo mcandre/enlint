@@ -73,7 +73,7 @@ Note that when UTF-8 text contains purely ASCII characters, software will typica
 
 # REQUIREMENTS
 
-* [ruby](https://www.ruby-lang.org/) 2.3+
+* [ruby](https://www.ruby-lang.org/) 2.7+
 * [file](http://darwinsys.com/file/)
 
 ## Optional
